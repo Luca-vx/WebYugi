@@ -3,12 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\controllers\\inutil.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\controllers\\inutil.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\model\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\model\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\model\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\model\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\infrastructure\\dbconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\infrastructure\\dbconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\webyugi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\webyugi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,27 +43,90 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "UserDto.cs",
+              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\UserDto.cs",
+              "RelativeDocumentMoniker": "WebYugi\\Model\\UserDto.cs",
+              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\UserDto.cs",
+              "RelativeToolTip": "WebYugi\\Model\\UserDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-02T22:56:48.981Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "WebYugi\\Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "WebYugi\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAAADkAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-02T22:49:41.958Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DbConnection.cs",
+              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Infrastructure\\DbConnection.cs",
+              "RelativeDocumentMoniker": "WebYugi\\Infrastructure\\DbConnection.cs",
+              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Infrastructure\\DbConnection.cs",
+              "RelativeToolTip": "WebYugi\\Infrastructure\\DbConnection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-02T20:20:03.291Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Program.cs",
               "RelativeDocumentMoniker": "WebYugi\\Program.cs",
               "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Program.cs",
               "RelativeToolTip": "WebYugi\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-08-27T15:36:37.14Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "inutil.cs",
-              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Controllers\\inutil.cs",
-              "RelativeDocumentMoniker": "WebYugi\\Controllers\\inutil.cs",
-              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Controllers\\inutil.cs",
-              "RelativeToolTip": "WebYugi\\Controllers\\inutil.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\appsettings.json",
+              "RelativeDocumentMoniker": "WebYugi\\appsettings.json",
+              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\appsettings.json",
+              "RelativeToolTip": "WebYugi\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-09-02T17:34:57.295Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "WebYugi.csproj",
+              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\WebYugi.csproj",
+              "RelativeDocumentMoniker": "WebYugi\\WebYugi.csproj",
+              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\WebYugi.csproj",
+              "RelativeToolTip": "WebYugi\\WebYugi.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-09-02T17:32:37.868Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Users.cs",
+              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\Users.cs",
+              "RelativeDocumentMoniker": "WebYugi\\Model\\Users.cs",
+              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\Users.cs",
+              "RelativeToolTip": "WebYugi\\Model\\Users.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAkAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-02T13:50:57.048Z",
+              "WhenOpened": "2026-09-02T17:22:27.707Z",
               "EditorCaption": ""
             }
           ]
