@@ -1,10 +1,10 @@
-Yu-Gi-Oh! Deck Builder
+# Yu-Gi-Oh! Deck Builder
 
 Plataforma web para criação, montagem, organização e validação de Decks de Yu-Gi-Oh!, permitindo que os usuários pesquisem cartas, construam suas próprias listas e verifiquem sua validade de acordo com as regras e Banlists configuradas no sistema.
 
 Status do projeto: Em desenvolvimento 🚧
 
-📖 Sobre o projeto
+## 📖 Sobre o projeto
 
 O projeto consiste no desenvolvimento de uma plataforma web voltada para jogadores de Yu-Gi-Oh! que desejam montar e organizar seus Decks de forma prática.
 
@@ -12,7 +12,7 @@ A aplicação disponibiliza um catálogo de cartas e um Deck Builder, permitindo
 
 O projeto foi planejado com foco em usabilidade, organização, modularidade e confiabilidade das regras de construção de Decks.
 
-🎯 Objetivos
+## 🎯 Objetivos
 
 O principal objetivo é desenvolver uma plataforma que facilite a construção e o gerenciamento de Decks de Yu-Gi-Oh!.
 
@@ -26,12 +26,12 @@ Entre os objetivos específicos estão:
 * Permitir visualização e compartilhamento de Decks.
 * Oferecer recursos de organização pessoal, como favoritos e coleção.
   
-🃏 Funcionalidades
-Página inicial
+## 🃏 Funcionalidades
+### Página inicial
 
 A página inicial apresenta a plataforma e fornece acesso às principais funcionalidades do sistema.
 
-Dashboard
+### Dashboard
 
 O Dashboard centraliza os recursos do usuário, permitindo acessar rapidamente:
 
@@ -41,7 +41,8 @@ O Dashboard centraliza os recursos do usuário, permitindo acessar rapidamente:
 * Cartas favoritas;
 * Coleção;
 * Perfil.
-* Catálogo de cartas
+
+### Catálogo de cartas
 
 O sistema disponibiliza um catálogo para consulta das cartas.
 
@@ -52,7 +53,8 @@ O sistema disponibiliza um catálogo para consulta das cartas.
 * filtrar por características;
 * visualizar detalhes;
 * consultar restrições da Banlist.
-* Deck Builder
+
+### Deck Builder
 
 O Deck Builder é o principal recurso da plataforma.
 
@@ -69,7 +71,8 @@ O usuário poderá:
 * organizar Side Deck;
 * duplicar Decks;
 * salvar suas listas.
-* Validação de Deck
+
+### Validação de Deck
 
 O sistema verifica automaticamente se a composição do Deck atende às regras configuradas.
 
@@ -85,7 +88,7 @@ Entre as validações estão:
 
 O usuário recebe informações sobre os problemas encontrados para facilitar a correção do Deck.
 
-Banlist
+### Banlist
 
 A plataforma possui suporte a Banlists, permitindo consultar as restrições aplicadas às cartas.
 
@@ -99,7 +102,7 @@ Os possíveis estados de uma carta são:
 
 Isso permite que o usuário controle quem pode visualizar suas listas.
 
-Recursos sociais
+### Recursos sociais
 
 A plataforma poderá disponibilizar:
 
@@ -108,44 +111,45 @@ A plataforma poderá disponibilizar:
 
 O usuário poderá marcar cartas como favoritas para encontrá-las facilmente posteriormente.
 
-Coleção
+### Coleção
 
 O sistema poderá permitir que o usuário registre sua coleção pessoal de cartas e suas respectivas quantidades.
 
-🧩 Modelo de domínio
+## 🧩 Modelo de domínio
 
 O domínio principal da aplicação é baseado nas seguintes entidades:
 
 -------------------------> FAZER DEPOIS
-🔧 Tecnologias
+## 🔧 Tecnologias
 
 A stack tecnológica pode ser definida conforme a implementação do projeto.
 
-Backend
+### Backend
 * C#
 * ASP.NET Core
 * Entity Framework Core
 * API REST
   
-Banco de dados
+### Banco de dados
 * PostgreSQL
   
-Frontend
+### Frontend
 * HTML
 * CSS
 * JavaScript
 
 ou um framework frontend, caso adotado durante o desenvolvimento.
 
-Ferramentas
+### Ferramentas
 * Git
 * GitHub
 * Visual Studio / Visual Studio Code
 
-🏗️ Arquitetura
+## 🏗️ Arquitetura
 
 ------------------------> FAZER DEPOIS
-📋 Histórias de usuário
+
+## 📋 Histórias de usuário
 
 O desenvolvimento é organizado através de Histórias de Usuário (HUs) priorizadas.
 
@@ -164,7 +168,7 @@ Prioridade	Significado
 
 As HUs são posteriormente refinadas com critérios de aceitação, permitindo que cada requisito seja desenvolvido e testado de forma objetiva.
 
-✅ Escopo
+### ✅ Escopo
 
 O sistema contempla:
 
@@ -181,7 +185,7 @@ O sistema contempla:
 * Favoritos;
 * Coleção;
   
-Mecânicas fora do escopo
+### Mecânicas fora do escopo
 
 O projeto não contempla partidas online.
 
@@ -201,7 +205,7 @@ Também não fazem parte do sistema:
 
 O foco é exclusivamente a criação, organização e validação de Decks.
 
-📌 Roadmap
+## 📌 Roadmap
 Fase 1 — Estrutura inicial
  Configuração do projeto
  Banco de dados
@@ -240,11 +244,11 @@ Fase 5 — Recursos adicionais
  Decks públicos
  Duplicação de Decks
  
-👥 Equipe
+## 👥 Equipe
 
 Projeto desenvolvido como parte de uma iniciativa acadêmica de desenvolvimento de software.
 
-📄 Documentação
+## 📄 Documentação
 
 A documentação do projeto inclui:
 
@@ -256,10 +260,10 @@ A documentação do projeto inclui:
 * arquitetura do sistema;
 * documentação da API;
 * testes.
-⚠️ Aviso
+## ⚠️ Aviso
 
 Yu-Gi-Oh! é uma propriedade intelectual de seus respectivos detentores. Este projeto possui finalidade acadêmica e/ou experimental e não possui vínculo oficial com a Konami.
 
-🚀 Objetivo do projeto
+## 🚀 Objetivo do projeto
 
 Criar uma ferramenta simples, organizada e confiável para transformar a ideia de um Deck em uma lista estruturada, pesquisável e validada.
