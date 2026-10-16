@@ -35,5 +35,8 @@ namespace WebYugi.Model
             DataCadastro = DateTime.UtcNow;
         }
 
+        public ICollection<Deck> Decks { get; set; } = new List<Deck>();
+        public ICollection<FavoriteCard> FavoriteCards { get; set; } = new List<FavoriteCard>();
+        public ICollection<CollectionCard> CollectionCards { get; set; } = new List<CollectionCard>();
     }
 }

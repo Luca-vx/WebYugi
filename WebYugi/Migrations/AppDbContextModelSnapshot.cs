@@ -22,6 +22,323 @@ namespace WebYugi.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("WebYugi.Model.Banlist", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("EffectiveDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_banlists_Name");
+
+                    b.ToTable("banlists");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.Card", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Archetype")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int?>("Attack")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Attribute")
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)");
+
+                    b.Property<int?>("Defense")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<int?>("Level")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("MonsterRace")
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int?>("Rank")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Rarity")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Archetype")
+                        .HasDatabaseName("IX_cards_Archetype");
+
+                    b.HasIndex("Name")
+                        .HasDatabaseName("IX_cards_Name");
+
+                    b.HasIndex("Type")
+                        .HasDatabaseName("IX_cards_Type");
+
+                    b.ToTable("cards");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.CardCardSubtype", b =>
+                {
+                    b.Property<int>("CardId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CardSubtypeId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("CardId", "CardSubtypeId");
+
+                    b.HasIndex("CardSubtypeId");
+
+                    b.ToTable("card_card_subtypes");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.CardEffect", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ActivationCondition")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<int>("CardId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Cost")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Resolution")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardId")
+                        .HasDatabaseName("IX_card_effects_CardId");
+
+                    b.ToTable("card_effects");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.CardRestriction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AllowedQuantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("BanlistId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CardId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardId");
+
+                    b.HasIndex("BanlistId", "CardId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_card_restrictions_BanlistId_CardId");
+
+                    b.ToTable("card_restrictions", t =>
+                        {
+                            t.HasCheckConstraint("CK_card_restrictions_AllowedQuantity", "\"AllowedQuantity\" >= 0");
+                        });
+                });
+
+            modelBuilder.Entity("WebYugi.Model.CardSubtype", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Category", "Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_card_subtypes_Category_Name");
+
+                    b.ToTable("card_subtypes");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.CollectionCard", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CardId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("UserId", "CardId");
+
+                    b.HasIndex("CardId");
+
+                    b.ToTable("collection_cards", t =>
+                        {
+                            t.HasCheckConstraint("CK_collection_cards_Quantity", "\"Quantity\" > 0");
+                        });
+                });
+
+            modelBuilder.Entity("WebYugi.Model.Deck", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("IX_decks_UserId");
+
+                    b.ToTable("decks");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.DeckCard", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CardId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DeckId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Section")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardId");
+
+                    b.HasIndex("DeckId", "CardId", "Section")
+                        .IsUnique()
+                        .HasDatabaseName("IX_deck_cards_DeckId_CardId_Section");
+
+                    b.ToTable("deck_cards", t =>
+                        {
+                            t.HasCheckConstraint("CK_deck_cards_Quantity", "\"Quantity\" > 0");
+                        });
+                });
+
+            modelBuilder.Entity("WebYugi.Model.FavoriteCard", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CardId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("UserId", "CardId");
+
+                    b.HasIndex("CardId");
+
+                    b.ToTable("favorite_cards");
+                });
+
             modelBuilder.Entity("WebYugi.Model.Users", b =>
                 {
                     b.Property<int>("Id")
@@ -48,6 +365,162 @@ namespace WebYugi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("users");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.CardCardSubtype", b =>
+                {
+                    b.HasOne("WebYugi.Model.Card", "Card")
+                        .WithMany("CardSubtypes")
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebYugi.Model.CardSubtype", "CardSubtype")
+                        .WithMany("Cards")
+                        .HasForeignKey("CardSubtypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Card");
+
+                    b.Navigation("CardSubtype");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.CardEffect", b =>
+                {
+                    b.HasOne("WebYugi.Model.Card", "Card")
+                        .WithMany("Effects")
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Card");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.CardRestriction", b =>
+                {
+                    b.HasOne("WebYugi.Model.Banlist", "Banlist")
+                        .WithMany("Restrictions")
+                        .HasForeignKey("BanlistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebYugi.Model.Card", "Card")
+                        .WithMany("Restrictions")
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Banlist");
+
+                    b.Navigation("Card");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.CollectionCard", b =>
+                {
+                    b.HasOne("WebYugi.Model.Card", "Card")
+                        .WithMany("Collections")
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("WebYugi.Model.Users", "User")
+                        .WithMany("CollectionCards")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Card");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.Deck", b =>
+                {
+                    b.HasOne("WebYugi.Model.Users", "User")
+                        .WithMany("Decks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.DeckCard", b =>
+                {
+                    b.HasOne("WebYugi.Model.Card", "Card")
+                        .WithMany("DeckCards")
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("WebYugi.Model.Deck", "Deck")
+                        .WithMany("DeckCards")
+                        .HasForeignKey("DeckId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Card");
+
+                    b.Navigation("Deck");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.FavoriteCard", b =>
+                {
+                    b.HasOne("WebYugi.Model.Card", "Card")
+                        .WithMany("FavoriteByUsers")
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("WebYugi.Model.Users", "User")
+                        .WithMany("FavoriteCards")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Card");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.Banlist", b =>
+                {
+                    b.Navigation("Restrictions");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.Card", b =>
+                {
+                    b.Navigation("CardSubtypes");
+
+                    b.Navigation("Collections");
+
+                    b.Navigation("DeckCards");
+
+                    b.Navigation("Effects");
+
+                    b.Navigation("FavoriteByUsers");
+
+                    b.Navigation("Restrictions");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.CardSubtype", b =>
+                {
+                    b.Navigation("Cards");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.Deck", b =>
+                {
+                    b.Navigation("DeckCards");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.Users", b =>
+                {
+                    b.Navigation("CollectionCards");
+
+                    b.Navigation("Decks");
+
+                    b.Navigation("FavoriteCards");
                 });
 #pragma warning restore 612, 618
         }
