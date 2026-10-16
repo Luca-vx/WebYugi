@@ -5,6 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebYugi.Infrastructure;
 using WebYugi.Model;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using WebYugi.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebYugi.Controllers
 {
@@ -12,25 +17,51 @@ namespace WebYugi.Controllers
     [Route("users")]
     public class UsersController : ControllerBase
     {
-        private readonly DbConnection _context;
+        private readonly AppDbContext _context;
 
-        public UsersController(DbConnection context)
+        public UsersController(AppDbContext context)
         {
             _context = context;
         }
 
+        [HttpPost("login")]
+        [AllowAnonymous]
+        public async Task<ActionResult<UserDto>> Login([FromBody] LoginRequest request)
+        {
+            if (request == null) return BadRequest(new { message = "Credenciais inválidas." });
+            return await request.LoginAsync(_context, HttpContext);
+        }
+
+        [HttpPost("logout")]
+        [Authorize]
+        public async Task<ActionResult> Logout()
+        {
+            var dto = new LoginRequest();
+            return await dto.LogoutAsync(HttpContext);
+        }
+
+        [HttpGet("me")]
+        [Authorize]
+        public async Task<ActionResult<UserDto>> Me()
+        {
+            var dto = new LoginRequest();
+            return await dto.MeAsync(_context, HttpContext);
+        }
+
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetAll()
         {
             var list = await _context.Users
                 .AsNoTracking()
-                .Select(u => new UserDto(u.Id, u.name, u.email))
+                .Select(u => new UserDto(u.Id, u.Name, u.Email, u.DataCadastro))
                 .ToListAsync();
 
             return Ok(list);
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<UserDto>> Get(int id)
         {
             var user = await _context.Users
@@ -39,23 +70,22 @@ namespace WebYugi.Controllers
 
             if (user == null) return NotFound();
 
-            var dto = new UserDto(user.Id, user.name, user.email);
+            var dto = new UserDto(user.Id, user.Name, user.Email, user.DataCadastro);
             return Ok(dto);
         }
 
-
-        //parei
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<UserDto>> Create([FromBody] Users user)
         {
             if (user == null) return BadRequest();
 
             // validate duplicate email or username (case-insensitive)
-            var normalizedEmail = user.email?.Trim().ToLowerInvariant();
-            var normalizedName = user.name?.Trim();
+            var normalizedEmail = user.Email?.Trim().ToLowerInvariant();
+            var normalizedName = user.Name?.Trim();
 
             var exists = await _context.Users.AnyAsync(u =>
-                u.email.ToLower() == normalizedEmail || u.name == normalizedName);
+                u.Email.ToLower() == normalizedEmail || u.Name == normalizedName);
 
             if (exists)
             {
@@ -63,16 +93,17 @@ namespace WebYugi.Controllers
             }
 
             // ignore any client-supplied Id; let the database set it
-            var newUser = new Users(user.name, user.email, user.senha);
+            var newUser = new Users(user.Name, user.Email, user.Senha);
 
             _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
 
-            var dto = new UserDto(newUser.Id, newUser.name, newUser.email);
+            var dto = new UserDto(newUser.Id, newUser.Name, newUser.Email, newUser.DataCadastro);
             return CreatedAtAction(nameof(Get), new { id = newUser.Id }, dto);
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ActionResult> Update(int id, [FromBody] Users updated)
         {
             if (updated == null) return BadRequest();
@@ -80,11 +111,11 @@ namespace WebYugi.Controllers
             var existing = await _context.Users.FindAsync(id);
             if (existing == null) return NotFound();
 
-            existing.name = updated.name;
-            existing.email = updated.email;
-            if (!string.IsNullOrWhiteSpace(updated.senha))
+            existing.Name = updated.Name;
+            existing.Email = updated.Email;
+            if (!string.IsNullOrWhiteSpace(updated.Senha))
             {
-                existing.senha = updated.senha;
+                existing.Senha = updated.Senha;
             }
 
             await _context.SaveChangesAsync();
@@ -92,6 +123,7 @@ namespace WebYugi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult> Delete(int id)
         {
             var existing = await _context.Users.FindAsync(id);

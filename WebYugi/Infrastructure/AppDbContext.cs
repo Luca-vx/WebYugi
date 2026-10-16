@@ -4,10 +4,10 @@ using WebYugi.Model;
 
 namespace WebYugi.Infrastructure
 {
-    public class DbConnection : DbContext
+    public class AppDbContext : DbContext
     {
 
-        public DbConnection(DbContextOptions<DbConnection> options) : base(options){
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options){
         }
 
         public DbSet<Users> Users { get; set; }        

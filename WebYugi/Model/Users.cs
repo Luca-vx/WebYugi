@@ -8,15 +8,31 @@ namespace WebYugi.Model
     {
         public Users() { }
         public int Id { get; set; }
-        public string name { get; set; }
-        public string email { get; set; }
-        public string senha { get; set; }
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        public string Senha { get; set; }
+
+        public DateTime DataCadastro { get; set; }
+
+        // Authentication helpers (kept in Users as requested)
+        public bool ValidatePassword(string password)
+        {
+            // As requested, no hashing or security; plain comparison
+            return Senha == password;
+        }
 
         public Users(string name, string email, string senha)
         {
-            this.name = name;
-            this.email = email;
-            this.senha = senha;
+            Name = name;
+            Email = email;
+            Senha = senha;
+            DataCadastro = DateTime.UtcNow;
         }
 
     }
