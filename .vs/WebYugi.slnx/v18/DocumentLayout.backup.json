@@ -3,6 +3,50 @@
   "WorkspaceRootPath": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\services\\localcardimagestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\services\\localcardimagestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\services\\icardimagestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\services\\icardimagestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\uploads\\cartas\\.gitkeep||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\uploads\\cartas\\.gitkeep||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\model\\cardcardsubtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\model\\cardcardsubtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\model\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\model\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\model\\enums\\catalogenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\model\\enums\\catalogenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\model\\cardeffect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\model\\cardeffect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\model\\cardsubtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\model\\cardsubtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\model\\collectioncard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\model\\collectioncard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\model\\deckcard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\model\\deckcard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\model\\deck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\model\\deck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|c:\\users\\lucas\\downloads\\lucas\\tsi\\yugi\\webyugi\\webyugi\\dtos\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7159F91-9DD3-C191-9EB1-4D6CD8B72DC0}|WebYugi\\WebYugi.csproj|solutionrelative:webyugi\\dtos\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -50,11 +94,158 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "LocalCardImageStorage.cs",
+              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Services\\LocalCardImageStorage.cs",
+              "RelativeDocumentMoniker": "WebYugi\\Services\\LocalCardImageStorage.cs",
+              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Services\\LocalCardImageStorage.cs",
+              "RelativeToolTip": "WebYugi\\Services\\LocalCardImageStorage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T20:55:07.779Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ICardImageStorage.cs",
+              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Services\\ICardImageStorage.cs",
+              "RelativeDocumentMoniker": "WebYugi\\Services\\ICardImageStorage.cs",
+              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Services\\ICardImageStorage.cs",
+              "RelativeToolTip": "WebYugi\\Services\\ICardImageStorage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T20:55:06.45Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": ".gitkeep",
+              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\uploads\\cartas\\.gitkeep",
+              "RelativeDocumentMoniker": "WebYugi\\uploads\\cartas\\.gitkeep",
+              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\uploads\\cartas\\.gitkeep",
+              "RelativeToolTip": "WebYugi\\uploads\\cartas\\.gitkeep",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-10-16T20:55:00.073Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CollectionCard.cs",
+              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\CollectionCard.cs",
+              "RelativeDocumentMoniker": "WebYugi\\Model\\CollectionCard.cs",
+              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\CollectionCard.cs",
+              "RelativeToolTip": "WebYugi\\Model\\CollectionCard.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T20:21:04.101Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CardSubtype.cs",
+              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\CardSubtype.cs",
+              "RelativeDocumentMoniker": "WebYugi\\Model\\CardSubtype.cs",
+              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\CardSubtype.cs",
+              "RelativeToolTip": "WebYugi\\Model\\CardSubtype.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T20:20:51.773Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CatalogEnums.cs",
+              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\Enums\\CatalogEnums.cs",
+              "RelativeDocumentMoniker": "WebYugi\\Model\\Enums\\CatalogEnums.cs",
+              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\Enums\\CatalogEnums.cs",
+              "RelativeToolTip": "WebYugi\\Model\\Enums\\CatalogEnums.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T20:20:42.947Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "DeckCard.cs",
+              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\DeckCard.cs",
+              "RelativeDocumentMoniker": "WebYugi\\Model\\DeckCard.cs",
+              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\DeckCard.cs",
+              "RelativeToolTip": "WebYugi\\Model\\DeckCard.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T20:19:59.133Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Deck.cs",
+              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\Deck.cs",
+              "RelativeDocumentMoniker": "WebYugi\\Model\\Deck.cs",
+              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\Deck.cs",
+              "RelativeToolTip": "WebYugi\\Model\\Deck.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T20:03:31.813Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CardEffect.cs",
+              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\CardEffect.cs",
+              "RelativeDocumentMoniker": "WebYugi\\Model\\CardEffect.cs",
+              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\CardEffect.cs",
+              "RelativeToolTip": "WebYugi\\Model\\CardEffect.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T20:03:27.57Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Card.cs",
+              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\Card.cs",
+              "RelativeDocumentMoniker": "WebYugi\\Model\\Card.cs",
+              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\Card.cs",
+              "RelativeToolTip": "WebYugi\\Model\\Card.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T20:03:24.884Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CardCardSubtype.cs",
+              "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\CardCardSubtype.cs",
+              "RelativeDocumentMoniker": "WebYugi\\Model\\CardCardSubtype.cs",
+              "ToolTip": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\CardCardSubtype.cs",
+              "RelativeToolTip": "WebYugi\\Model\\CardCardSubtype.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T20:03:25.91Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "LoginRequest.cs",
               "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\DTOs\\LoginRequest.cs",
               "RelativeDocumentMoniker": "WebYugi\\DTOs\\LoginRequest.cs",
@@ -67,7 +258,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 13,
               "Title": "UsersController.cs",
               "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "WebYugi\\Controllers\\UsersController.cs",
@@ -79,7 +270,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 16,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Infrastructure\\AppDbContext.cs",
               "RelativeDocumentMoniker": "WebYugi\\Infrastructure\\AppDbContext.cs",
@@ -91,7 +282,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 15,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Program.cs",
               "RelativeDocumentMoniker": "WebYugi\\Program.cs",
@@ -103,7 +294,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 12,
               "Title": "Users.cs",
               "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\Model\\Users.cs",
               "RelativeDocumentMoniker": "WebYugi\\Model\\Users.cs",
@@ -115,7 +306,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 17,
               "Title": "UserDto.cs",
               "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\DTOs\\UserDto.cs",
               "RelativeDocumentMoniker": "WebYugi\\DTOs\\UserDto.cs",
@@ -127,7 +318,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 14,
               "Title": "WebYugi.http",
               "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\WebYugi.http",
               "RelativeDocumentMoniker": "WebYugi\\WebYugi.http",
@@ -139,7 +330,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 19,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\appsettings.json",
               "RelativeDocumentMoniker": "WebYugi\\appsettings.json",
@@ -151,7 +342,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 18,
               "Title": "WebYugi.csproj",
               "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\WebYugi\\WebYugi.csproj",
               "RelativeDocumentMoniker": "WebYugi\\WebYugi.csproj",
@@ -163,7 +354,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 20,
               "Title": ".gitignore",
               "DocumentMoniker": "C:\\Users\\lucas\\Downloads\\LUCAS\\TSI\\yugi\\WebYugi\\.gitignore",
               "RelativeDocumentMoniker": ".gitignore",
