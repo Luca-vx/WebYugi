@@ -141,7 +141,6 @@ namespace WebYugi.Controllers
             card.Attribute = request.Attribute;
             card.MonsterRace = request.MonsterRace;
             card.Level = request.Level;
-            card.Rank = request.Rank;
             card.Attack = request.Attack;
             card.Defense = request.Defense;
             card.Description = request.Description.Trim();

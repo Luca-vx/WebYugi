@@ -20,9 +20,6 @@ namespace WebYugi.DTOs
         [Range(0, 13)]
         public int? Level { get; set; }
 
-        [Range(0, 13)]
-        public int? Rank { get; set; }
-
         public int? Attack { get; set; }
 
         public int? Defense { get; set; }

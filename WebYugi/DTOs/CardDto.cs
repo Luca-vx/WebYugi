@@ -29,7 +29,6 @@ namespace WebYugi.DTOs
                 Attribute = card.Attribute,
                 MonsterRace = card.MonsterRace,
                 Level = card.Level,
-                Rank = card.Rank,
                 Attack = card.Attack,
                 Defense = card.Defense,
                 Description = card.Description,

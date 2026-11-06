@@ -19,5 +19,12 @@ namespace WebYugi.Model
 
         public Users User { get; set; } = null!;
         public ICollection<DeckCard> DeckCards { get; set; } = new List<DeckCard>();
+
+        public Deck(int userId, string name)
+        {
+            UserId = userId;
+            Name = name;
+            Description = null;
+        }
     }
 }
