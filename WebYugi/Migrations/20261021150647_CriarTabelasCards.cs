@@ -36,22 +36,6 @@ namespace WebYugi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Email = table.Column<string>(type: "text", nullable: false),
-                    Senha = table.Column<string>(type: "text", nullable: false),
-                    DataCadastro = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "decks",
                 columns: table => new
                 {
@@ -146,8 +130,6 @@ namespace WebYugi.Migrations
             migrationBuilder.DropTable(
                 name: "decks");
 
-            migrationBuilder.DropTable(
-                name: "users");
         }
     }
 }

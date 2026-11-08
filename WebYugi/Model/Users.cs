@@ -35,7 +35,8 @@ namespace WebYugi.Model
             DataCadastro = DateTime.UtcNow;
         }
 
-        // # Serve para que apenas 1 usuario tenha acesso ao seus decks, e que ao deletar o usuario, todos os decks dele sejam deletados também
+         // # Serve para que apenas 1 usuario tenha acesso ao seus decks, e que ao deletar o usuario, todos os decks dele sejam deletados também
         public ICollection<Deck> Decks { get; set; } = new List<Deck>();
+        public ICollection<UserFavoriteCard> FavoriteCards { get; set; } = new List<UserFavoriteCard>();
     }
 }

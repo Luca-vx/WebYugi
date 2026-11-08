@@ -154,6 +154,21 @@ namespace WebYugi.Migrations
                         });
                 });
 
+            modelBuilder.Entity("WebYugi.Model.UserFavoriteCard", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CardId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("UserId", "CardId");
+
+                    b.HasIndex("CardId");
+
+                    b.ToTable("user_favorite_cards", (string)null);
+                });
+
             modelBuilder.Entity("WebYugi.Model.Users", b =>
                 {
                     b.Property<int>("Id")
@@ -212,9 +227,30 @@ namespace WebYugi.Migrations
                     b.Navigation("Deck");
                 });
 
+            modelBuilder.Entity("WebYugi.Model.UserFavoriteCard", b =>
+                {
+                    b.HasOne("WebYugi.Model.Card", "Card")
+                        .WithMany("FavoriteUsers")
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebYugi.Model.Users", "User")
+                        .WithMany("FavoriteCards")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Card");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WebYugi.Model.Card", b =>
                 {
                     b.Navigation("DeckCards");
+
+                    b.Navigation("FavoriteUsers");
                 });
 
             modelBuilder.Entity("WebYugi.Model.Deck", b =>
@@ -225,6 +261,8 @@ namespace WebYugi.Migrations
             modelBuilder.Entity("WebYugi.Model.Users", b =>
                 {
                     b.Navigation("Decks");
+
+                    b.Navigation("FavoriteCards");
                 });
 #pragma warning restore 612, 618
         }

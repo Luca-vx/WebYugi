@@ -23,12 +23,42 @@ namespace WebYugi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<CardDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<CardDto>>> GetAll(
+            [FromQuery] string? search,
+            [FromQuery] WebYugi.Model.Enums.CardType? type,
+            [FromQuery] WebYugi.Model.Enums.CardAttribute? attribute,
+            [FromQuery] WebYugi.Model.Enums.MonsterRace? monsterRace,
+            [FromQuery] int? minAttack,
+            [FromQuery] int? maxAttack,
+            [FromQuery] int? minDefense,
+            [FromQuery] int? maxDefense,
+            [FromQuery] int? minLevel,
+            [FromQuery] int? maxLevel,
+            [FromQuery] string? archetype,
+            [FromQuery] string? rarity,
+            [FromQuery] string? description,
+            CancellationToken cancellationToken)
         {
-            var cards = await _context.Cards
-                .AsNoTracking()
-                .OrderBy(c => c.Name)
-                .ToListAsync();
+            var query = _context.Cards.AsNoTracking();
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var term = search.Trim();
+                query = query.Where(card => EF.Functions.ILike(card.Name, $"%{term}%"));
+            }
+            if (type.HasValue) query = query.Where(card => card.Type == type.Value);
+            if (attribute.HasValue) query = query.Where(card => card.Attribute == attribute.Value);
+            if (monsterRace.HasValue) query = query.Where(card => card.MonsterRace == monsterRace.Value);
+            if (minAttack.HasValue) query = query.Where(card => card.Attack >= minAttack.Value);
+            if (maxAttack.HasValue) query = query.Where(card => card.Attack <= maxAttack.Value);
+            if (minDefense.HasValue) query = query.Where(card => card.Defense >= minDefense.Value);
+            if (maxDefense.HasValue) query = query.Where(card => card.Defense <= maxDefense.Value);
+            if (minLevel.HasValue) query = query.Where(card => card.Level >= minLevel.Value);
+            if (maxLevel.HasValue) query = query.Where(card => card.Level <= maxLevel.Value);
+            if (!string.IsNullOrWhiteSpace(archetype)) query = query.Where(card => card.Archetype != null && EF.Functions.ILike(card.Archetype, $"%{archetype.Trim()}%"));
+            if (!string.IsNullOrWhiteSpace(rarity)) query = query.Where(card => card.Rarity != null && EF.Functions.ILike(card.Rarity, $"%{rarity.Trim()}%"));
+            if (!string.IsNullOrWhiteSpace(description)) query = query.Where(card => EF.Functions.ILike(card.Description, $"%{description.Trim()}%"));
+
+            var cards = await query.OrderBy(card => card.Name).ToListAsync(cancellationToken);
 
             return Ok(cards.Select(CardDto.FromEntity));
         }

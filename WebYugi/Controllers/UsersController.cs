@@ -24,6 +24,34 @@ namespace WebYugi.Controllers
             _context = context;
         }
 
+        public record UpdateProfileRequest(string Name, string Email, string? Senha);
+
+        [HttpPut("me")]
+        [Authorize]
+        public async Task<ActionResult<UserDto>> UpdateMe([FromBody] UpdateProfileRequest request, CancellationToken cancellationToken)
+        {
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var userId)) return Unauthorized();
+            var name = request.Name?.Trim();
+            var email = request.Email?.Trim();
+            if (string.IsNullOrWhiteSpace(name) || name.Length > 100 || string.IsNullOrWhiteSpace(email) || !new System.ComponentModel.DataAnnotations.EmailAddressAttribute().IsValid(email))
+                return BadRequest(new { message = "Informe um nome e e-mail válidos." });
+            var duplicate = await _context.Users.AnyAsync(u => u.Id != userId && (u.Name.ToLower() == name.ToLower() || u.Email.ToLower() == email.ToLower()), cancellationToken);
+            if (duplicate) return Conflict(new { message = "Esse nome ou e-mail já está sendo usado." });
+            var user = await _context.Users.FindAsync([userId], cancellationToken);
+            if (user is null) return NotFound();
+            user.Name = name;
+            user.Email = email;
+            if (!string.IsNullOrWhiteSpace(request.Senha))
+            {
+                if (request.Senha.Length < 8) return BadRequest(new { message = "A senha deve ter ao menos 8 caracteres." });
+                user.Senha = request.Senha;
+            }
+            await _context.SaveChangesAsync(cancellationToken);
+            var claims = new[] { new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), new Claim(ClaimTypes.Name, user.Name), new Claim(ClaimTypes.Email, user.Email) };
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme)));
+            return Ok(new UserDto(user.Id, user.Name, user.Email, user.DataCadastro));
+        }
+
         [HttpPost("login")]
         [AllowAnonymous]
         public async Task<ActionResult<UserDto>> Login([FromBody] LoginRequest request)
@@ -52,8 +80,10 @@ namespace WebYugi.Controllers
         [Authorize]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetAll()
         {
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var userId)) return Unauthorized();
             var list = await _context.Users
                 .AsNoTracking()
+                .Where(u => u.Id == userId)
                 .Select(u => new UserDto(u.Id, u.Name, u.Email, u.DataCadastro))
                 .ToListAsync();
 
@@ -64,6 +94,8 @@ namespace WebYugi.Controllers
         [Authorize]
         public async Task<ActionResult<UserDto>> Get(int id)
         {
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var currentUserId)) return Unauthorized();
+            if (id != currentUserId) return Forbid();
             var user = await _context.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Id == id);
@@ -106,6 +138,8 @@ namespace WebYugi.Controllers
         [Authorize]
         public async Task<ActionResult> Update(int id, [FromBody] Users updated)
         {
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var currentUserId)) return Unauthorized();
+            if (id != currentUserId) return Forbid();
             if (updated == null) return BadRequest();
 
             var existing = await _context.Users.FindAsync(id);
@@ -126,6 +160,8 @@ namespace WebYugi.Controllers
         [Authorize]
         public async Task<ActionResult> Delete(int id)
         {
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var currentUserId)) return Unauthorized();
+            if (id != currentUserId) return Forbid();
             var existing = await _context.Users.FindAsync(id);
             if (existing == null) return NotFound();
 

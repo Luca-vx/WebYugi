@@ -13,6 +13,7 @@ namespace WebYugi.Infrastructure
         public DbSet<Card> Cards { get; set; }
         public DbSet<Deck> Decks { get; set; }
         public DbSet<DeckCard> DeckCards { get; set; }
+        public DbSet<UserFavoriteCard> UserFavoriteCards { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,6 +23,13 @@ namespace WebYugi.Infrastructure
             ConfigureCard(modelBuilder);
             ConfigureDeck(modelBuilder);
             ConfigureDeckCard(modelBuilder);
+            modelBuilder.Entity<UserFavoriteCard>(entity =>
+            {
+                entity.ToTable("user_favorite_cards");
+                entity.HasKey(favorite => new { favorite.UserId, favorite.CardId });
+                entity.HasOne(favorite => favorite.User).WithMany(user => user.FavoriteCards).HasForeignKey(favorite => favorite.UserId).OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(favorite => favorite.Card).WithMany(card => card.FavoriteUsers).HasForeignKey(favorite => favorite.CardId).OnDelete(DeleteBehavior.Cascade);
+            });
         }
 
         private static void ConfigureUsers(ModelBuilder modelBuilder)

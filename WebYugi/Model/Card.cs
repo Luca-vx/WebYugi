@@ -34,5 +34,6 @@ namespace WebYugi.Model
         public string? Rarity { get; set; }
 
         public ICollection<DeckCard> DeckCards { get; set; } = new List<DeckCard>();
+        public ICollection<UserFavoriteCard> FavoriteUsers { get; set; } = new List<UserFavoriteCard>();
     }
 }
