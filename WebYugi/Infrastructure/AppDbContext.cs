@@ -14,12 +14,34 @@ namespace WebYugi.Infrastructure
         public DbSet<Deck> Decks { get; set; }
         public DbSet<DeckCard> DeckCards { get; set; }
         public DbSet<UserFavoriteCard> UserFavoriteCards { get; set; }
+        public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             ConfigureUsers(modelBuilder);
+            modelBuilder.Entity<Users>(entity =>
+            {
+                entity.Property(user => user.Name).IsRequired();
+                entity.Property(user => user.Email).IsRequired();
+                // Keep normalized values unbounded so the migration preserves long legacy identifiers.
+                entity.Property(user => user.NormalizedName).IsRequired();
+                entity.Property(user => user.NormalizedEmail).IsRequired();
+                entity.Property(user => user.Senha).IsRequired();
+                entity.HasIndex(user => user.NormalizedEmail).IsUnique().HasFilter("length(\"NormalizedEmail\") BETWEEN 3 AND 254").HasDatabaseName("IX_users_NormalizedEmail");
+                entity.HasIndex(user => user.NormalizedName).IsUnique().HasFilter("length(\"NormalizedName\") BETWEEN 3 AND 100").HasDatabaseName("IX_users_NormalizedName");
+            });
+            modelBuilder.Entity<PasswordResetToken>(entity =>
+            {
+                entity.ToTable("password_reset_tokens");
+                entity.HasKey(token => token.Id);
+                entity.Property(token => token.TokenHash).HasMaxLength(64).IsRequired();
+                entity.HasIndex(token => token.TokenHash).IsUnique();
+                entity.HasIndex(token => new { token.UserId, token.ExpiresAt });
+                entity.HasOne(token => token.User).WithMany(user => user.PasswordResetTokens)
+                    .HasForeignKey(token => token.UserId).OnDelete(DeleteBehavior.Cascade);
+            });
             ConfigureCard(modelBuilder);
             ConfigureDeck(modelBuilder);
             ConfigureDeckCard(modelBuilder);

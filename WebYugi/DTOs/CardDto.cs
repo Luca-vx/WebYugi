@@ -11,7 +11,6 @@ namespace WebYugi.DTOs
         public CardAttribute? Attribute { get; set; }
         public MonsterRace? MonsterRace { get; set; }
         public int? Level { get; set; }
-        public int? Rank { get; set; }
         public int? Attack { get; set; }
         public int? Defense { get; set; }
         public string Description { get; set; } = string.Empty;

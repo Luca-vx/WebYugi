@@ -1,80 +1,39 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebYugi.Infrastructure;
-using WebYugi.Model;
-using System.Threading.Tasks;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace WebYugi.DTOs
+namespace WebYugi.DTOs;
+
+public sealed class LoginRequest
 {
-    public class LoginRequest
-    {
-        [Required]
-        public string EmailOrName { get; set; }
+    [Required, StringLength(254, MinimumLength = 1)]
+    public string EmailOrName { get; set; } = "";
 
-        [Required]
-        public string Password { get; set; }
+    [Required, StringLength(128, MinimumLength = 1)]
+    public string Password { get; set; } = "";
+}
 
-        // Perform login using this DTO instance. Returns 200 with UserDto on success or appropriate error result.
-        public async Task<ActionResult<UserDto>> LoginAsync(AppDbContext context, HttpContext httpContext)
-        {
-            if (this == null || string.IsNullOrWhiteSpace(this.Password) || string.IsNullOrWhiteSpace(this.EmailOrName))
-            {
-                return new BadRequestObjectResult(new { message = "Credenciais inválidas." });
-            }
+public sealed class RegisterRequest
+{
+    [Required, StringLength(100, MinimumLength = 3)]
+    public string Name { get; set; } = "";
 
-            var query = this.EmailOrName.Trim();
+    [Required, EmailAddress, StringLength(254)]
+    public string Email { get; set; } = "";
 
-            var user = await context.Users.FirstOrDefaultAsync(u => u.Email == query || u.Name == query);
-            if (user == null) return new UnauthorizedObjectResult(new { message = "Usuário não encontrado." });
+    [Required, StringLength(128, MinimumLength = 8)]
+    public string Senha { get; set; } = "";
+}
 
-            if (!user.ValidatePassword(this.Password))
-            {
-                return new UnauthorizedObjectResult(new { message = "Senha inválida." });
-            }
+public sealed class ForgotPasswordRequest
+{
+    [Required, EmailAddress, StringLength(254)]
+    public string Email { get; set; } = "";
+}
 
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.Email, user.Email)
-            };
+public sealed class ResetPasswordRequest
+{
+    [Required, StringLength(200, MinimumLength = 20)]
+    public string Token { get; set; } = "";
 
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var principal = new ClaimsPrincipal(identity);
-
-            await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
-            var dto = new UserDto(user.Id, user.Name, user.Email, user.DataCadastro);
-            return new OkObjectResult(dto);
-        }
-
-        // Perform logout (invalidate cookie/session)
-        public async Task<ActionResult> LogoutAsync(HttpContext httpContext)
-        {
-            await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return new NoContentResult();
-        }
-
-        // Return current authenticated user's data
-        public async Task<ActionResult<UserDto>> MeAsync(AppDbContext context, HttpContext httpContext)
-        {
-            var userPrincipal = httpContext.User;
-            if (userPrincipal?.Identity == null || !userPrincipal.Identity.IsAuthenticated)
-                return new UnauthorizedResult();
-
-            if (!int.TryParse(userPrincipal.FindFirstValue(ClaimTypes.NameIdentifier), out var userId))
-                return new UnauthorizedResult();
-
-            var user = await context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId);
-            if (user == null) return new NotFoundResult();
-
-            var dto = new UserDto(user.Id, user.Name, user.Email, user.DataCadastro);
-            return new OkObjectResult(dto);
-        }
-    }
+    [Required, StringLength(128, MinimumLength = 8)]
+    public string NewPassword { get; set; } = "";
 }

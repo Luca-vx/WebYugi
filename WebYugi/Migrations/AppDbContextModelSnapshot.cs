@@ -84,7 +84,7 @@ namespace WebYugi.Migrations
                     b.HasIndex("Type")
                         .HasDatabaseName("IX_cards_Type");
 
-                    b.ToTable("cards");
+                    b.ToTable("cards", (string)null);
                 });
 
             modelBuilder.Entity("WebYugi.Model.Deck", b =>
@@ -115,7 +115,7 @@ namespace WebYugi.Migrations
                     b.HasIndex("UserId")
                         .HasDatabaseName("IX_decks_UserId");
 
-                    b.ToTable("decks");
+                    b.ToTable("decks", (string)null);
                 });
 
             modelBuilder.Entity("WebYugi.Model.DeckCard", b =>
@@ -148,10 +148,42 @@ namespace WebYugi.Migrations
                         .IsUnique()
                         .HasDatabaseName("IX_deck_cards_DeckId_CardId_Section");
 
-                    b.ToTable("deck_cards", t =>
+                    b.ToTable("deck_cards", null, t =>
                         {
                             t.HasCheckConstraint("CK_deck_cards_Quantity", "\"Quantity\" > 0");
                         });
+                });
+
+            modelBuilder.Entity("WebYugi.Model.PasswordResetToken", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("TokenHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<DateTime?>("UsedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TokenHash")
+                        .IsUnique();
+
+                    b.HasIndex("UserId", "ExpiresAt");
+
+                    b.ToTable("password_reset_tokens", (string)null);
                 });
 
             modelBuilder.Entity("WebYugi.Model.UserFavoriteCard", b =>
@@ -188,13 +220,37 @@ namespace WebYugi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("NormalizedEmail")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("NormalizedName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("PasswordVersion")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Senha")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("SenhaHashed")
+                        .HasColumnType("boolean");
+
                     b.HasKey("Id");
 
-                    b.ToTable("users");
+                    b.HasIndex("NormalizedEmail")
+                        .IsUnique()
+                        .HasFilter("length(\"NormalizedEmail\") BETWEEN 3 AND 254")
+                        .HasDatabaseName("IX_users_NormalizedEmail");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasFilter("length(\"NormalizedName\") BETWEEN 3 AND 100")
+                        .HasDatabaseName("IX_users_NormalizedName");
+
+                    b.ToTable("users", (string)null);
                 });
 
             modelBuilder.Entity("WebYugi.Model.Deck", b =>
@@ -225,6 +281,17 @@ namespace WebYugi.Migrations
                     b.Navigation("Card");
 
                     b.Navigation("Deck");
+                });
+
+            modelBuilder.Entity("WebYugi.Model.PasswordResetToken", b =>
+                {
+                    b.HasOne("WebYugi.Model.Users", "User")
+                        .WithMany("PasswordResetTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WebYugi.Model.UserFavoriteCard", b =>
@@ -263,6 +330,8 @@ namespace WebYugi.Migrations
                     b.Navigation("Decks");
 
                     b.Navigation("FavoriteCards");
+
+                    b.Navigation("PasswordResetTokens");
                 });
 #pragma warning restore 612, 618
         }
