@@ -427,3 +427,24 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Local configuration, environment values and secrets
+.env
+.env.*
+!.env.example
+WebYugi/appsettings.json
+WebYugi/appsettings.*.local.json
+
+# Runtime database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploaded card images are user/runtime data; keep only the empty folder marker
+WebYugi/uploads/cartas/*
+!WebYugi/uploads/cartas/.gitkeep
+
+# Local certificates and private keys
+*.p12
+*.pem
+*.key
