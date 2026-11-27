@@ -29,6 +29,8 @@ namespace WebYugi.Infrastructure
                 entity.Property(user => user.NormalizedName).IsRequired();
                 entity.Property(user => user.NormalizedEmail).IsRequired();
                 entity.Property(user => user.Senha).IsRequired();
+                entity.Property(user => user.IsAdmin).HasDefaultValue(false);
+                entity.Property(user => user.MustChangePassword).HasDefaultValue(false);
                 entity.HasIndex(user => user.NormalizedEmail).IsUnique().HasFilter("length(\"NormalizedEmail\") BETWEEN 3 AND 254").HasDatabaseName("IX_users_NormalizedEmail");
                 entity.HasIndex(user => user.NormalizedName).IsUnique().HasFilter("length(\"NormalizedName\") BETWEEN 3 AND 100").HasDatabaseName("IX_users_NormalizedName");
             });

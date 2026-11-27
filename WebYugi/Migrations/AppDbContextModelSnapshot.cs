@@ -84,7 +84,7 @@ namespace WebYugi.Migrations
                     b.HasIndex("Type")
                         .HasDatabaseName("IX_cards_Type");
 
-                    b.ToTable("cards", (string)null);
+                    b.ToTable("cards");
                 });
 
             modelBuilder.Entity("WebYugi.Model.Deck", b =>
@@ -115,7 +115,7 @@ namespace WebYugi.Migrations
                     b.HasIndex("UserId")
                         .HasDatabaseName("IX_decks_UserId");
 
-                    b.ToTable("decks", (string)null);
+                    b.ToTable("decks");
                 });
 
             modelBuilder.Entity("WebYugi.Model.DeckCard", b =>
@@ -148,7 +148,7 @@ namespace WebYugi.Migrations
                         .IsUnique()
                         .HasDatabaseName("IX_deck_cards_DeckId_CardId_Section");
 
-                    b.ToTable("deck_cards", null, t =>
+                    b.ToTable("deck_cards", t =>
                         {
                             t.HasCheckConstraint("CK_deck_cards_Quantity", "\"Quantity\" > 0");
                         });
@@ -216,6 +216,16 @@ namespace WebYugi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsAdmin")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("MustChangePassword")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -242,15 +252,15 @@ namespace WebYugi.Migrations
 
                     b.HasIndex("NormalizedEmail")
                         .IsUnique()
-                        .HasFilter("length(\"NormalizedEmail\") BETWEEN 3 AND 254")
-                        .HasDatabaseName("IX_users_NormalizedEmail");
+                        .HasDatabaseName("IX_users_NormalizedEmail")
+                        .HasFilter("length(\"NormalizedEmail\") BETWEEN 3 AND 254");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasFilter("length(\"NormalizedName\") BETWEEN 3 AND 100")
-                        .HasDatabaseName("IX_users_NormalizedName");
+                        .HasDatabaseName("IX_users_NormalizedName")
+                        .HasFilter("length(\"NormalizedName\") BETWEEN 3 AND 100");
 
-                    b.ToTable("users", (string)null);
+                    b.ToTable("users");
                 });
 
             modelBuilder.Entity("WebYugi.Model.Deck", b =>

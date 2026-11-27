@@ -77,6 +77,7 @@ public sealed class UsersController : ControllerBase
 
     [HttpPost]
     [AllowAnonymous]
+    [EnableRateLimiting("auth")]
     public async Task<ActionResult<UserDto>> Create([FromBody] RegisterRequest request, CancellationToken cancellationToken)
     {
         var name = request.Name.Trim();
@@ -163,6 +164,7 @@ public sealed class UsersController : ControllerBase
         if (claimed != 1) return BadRequest(new { message = "Link de redefinição inválido ou expirado." });
         token.User.Senha = _passwordHasher.HashPassword(token.User, request.NewPassword);
         token.User.SenhaHashed = true;
+        token.User.MustChangePassword = false;
         token.User.PasswordVersion++;
         await _context.PasswordResetTokens.Where(item => item.UserId == token.UserId && item.Id != token.Id && item.UsedAt == null)
             .ExecuteUpdateAsync(update => update.SetProperty(item => item.UsedAt, now), cancellationToken);
@@ -202,7 +204,7 @@ public sealed class UsersController : ControllerBase
     {
         if (!TryGetUserId(out var userId)) return Unauthorized();
         var user = await _context.Users.AsNoTracking().Where(item => item.Id == userId)
-            .Select(item => new UserDto(item.Id, item.Name, item.Email, item.DataCadastro)).ToListAsync(cancellationToken);
+            .Select(item => new UserDto(item.Id, item.Name, item.Email, item.DataCadastro, item.IsAdmin, item.MustChangePassword)).ToListAsync(cancellationToken);
         return Ok(user);
     }
 
@@ -235,6 +237,8 @@ public sealed class UsersController : ControllerBase
         if (id != currentUserId) return Forbid();
         var user = await _context.Users.FindAsync([id], cancellationToken);
         if (user is null) return NotFound();
+        if (user.IsAdmin)
+            return Conflict(new { message = "Um administrador não pode excluir a própria conta por este endpoint. Faça a transferência administrativa manualmente antes." });
         _context.Users.Remove(user);
         await _context.SaveChangesAsync(cancellationToken);
         return NoContent();
@@ -266,8 +270,16 @@ public sealed class UsersController : ControllerBase
             user.Senha = _passwordHasher.HashPassword(user, request.Senha);
             user.SenhaHashed = true;
             user.PasswordVersion++;
+            user.MustChangePassword = false;
         }
-        await _context.SaveChangesAsync(cancellationToken);
+        try
+        {
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+        catch (DbUpdateException exception) when (exception.InnerException is Npgsql.PostgresException { SqlState: Npgsql.PostgresErrorCodes.UniqueViolation })
+        {
+            return Conflict(new { message = "Esse nome ou e-mail já está sendo usado." });
+        }
         await SignInAsync(user);
         return Ok(ToDto(user));
     }
@@ -289,7 +301,7 @@ public sealed class UsersController : ControllerBase
     private bool VerifyPassword(Users user, string password) => user.SenhaHashed
         ? _passwordHasher.VerifyHashedPassword(user, user.Senha, password) != PasswordVerificationResult.Failed
         : CryptographicOperations.FixedTimeEquals(Encoding.UTF8.GetBytes(user.Senha), Encoding.UTF8.GetBytes(password));
-    private static UserDto ToDto(Users user) => new(user.Id, user.Name, user.Email, user.DataCadastro);
+    private static UserDto ToDto(Users user) => new(user.Id, user.Name, user.Email, user.DataCadastro, user.IsAdmin, user.MustChangePassword);
     private static string HashToken(string token) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(token)));
 
     private static bool IsStrongPassword(string password, string name, string email)

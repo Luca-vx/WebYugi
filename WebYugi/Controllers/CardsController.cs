@@ -80,7 +80,7 @@ namespace WebYugi.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Policy = "AdminOnly")]
         [Consumes("multipart/form-data")]
         [RequestSizeLimit(6 * 1024 * 1024)]
         public async Task<ActionResult<CardDto>> Create([FromForm] CardFormRequest request, CancellationToken cancellationToken)
@@ -101,14 +101,22 @@ namespace WebYugi.Controllers
             }
 
             _context.Cards.Add(card);
-            await _context.SaveChangesAsync(cancellationToken);
+            try
+            {
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+            catch
+            {
+                _images.Delete(card.ImageUrl);
+                throw;
+            }
 
             var dto = CardDto.FromEntity(card);
             return CreatedAtAction(nameof(Get), new { id = card.Id }, dto);
         }
 
         [HttpPut("{id:int}")]
-        [Authorize]
+        [Authorize(Policy = "AdminOnly")]
         [Consumes("multipart/form-data")]
         [RequestSizeLimit(6 * 1024 * 1024)]
         public async Task<ActionResult<CardDto>> Update(int id, [FromForm] CardFormRequest request, CancellationToken cancellationToken)
@@ -121,13 +129,14 @@ namespace WebYugi.Controllers
 
             ApplyForm(existing, request);
 
+            var previousImagePath = existing.ImageUrl;
+            var replacementImagePath = (string?)null;
             if (request.Image is not null)
             {
                 try
                 {
-                    var newPath = await _images.SaveAsync(request.Image, cancellationToken);
-                    _images.Delete(existing.ImageUrl);
-                    existing.ImageUrl = newPath;
+                    replacementImagePath = await _images.SaveAsync(request.Image, cancellationToken);
+                    existing.ImageUrl = replacementImagePath;
                 }
                 catch (InvalidOperationException ex)
                 {
@@ -135,12 +144,23 @@ namespace WebYugi.Controllers
                 }
             }
 
-            await _context.SaveChangesAsync(cancellationToken);
+            try
+            {
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+            catch
+            {
+                _images.Delete(replacementImagePath);
+                throw;
+            }
+
+            if (replacementImagePath is not null)
+                _images.Delete(previousImagePath);
             return Ok(CardDto.FromEntity(existing));
         }
 
         [HttpDelete("{id:int}")]
-        [Authorize]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<ActionResult> Delete(int id, CancellationToken cancellationToken)
         {
             var existing = await _context.Cards.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
@@ -157,7 +177,7 @@ namespace WebYugi.Controllers
             }
             catch (DbUpdateException)
             {
-                return Conflict(new { message = "A carta não pode ser excluída porque está em uso em decks, coleções ou banlists." });
+                return Conflict(new { message = "A carta não pode ser excluída porque está sendo usada em um deck." });
             }
 
             _images.Delete(existing.ImageUrl);

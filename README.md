@@ -6,12 +6,12 @@ Backend REST do WebYugi: contas e sessões, catálogo de cartas, decks pessoais 
 
 - Cadastro, login por e-mail/nome, logout, leitura e atualização do próprio perfil e exclusão da própria conta.
 - Recuperação de senha por e-mail configurável.
-- Consulta pública do catálogo com filtros; operações de escrita para cartas exigem sessão autenticada.
+- Consulta pública do catálogo com filtros; operações de escrita para cartas são exclusivas de administradores.
 - CRUD de decks limitados ao proprietário, com cartas organizadas por seção (`Main`, `Extra`, `Side`).
 - Favoritos por usuário.
 - Upload de imagens de cartas para armazenamento local.
 
-> **Permissão do catálogo:** atualmente qualquer usuário autenticado pode criar, alterar ou excluir cartas. Não há papel administrativo; considere isso antes de expor a API publicamente.
+> **Administrador:** o backend cria a conta inicial automaticamente. Em desenvolvimento, entre com `admin@gmail.com` e senha `admin`. Em produção, `ADMIN_INITIAL_PASSWORD` precisa ser definida como senha forte.
 
 ## Tecnologias e organização
 
@@ -29,11 +29,13 @@ WebYugi/
   Infrastructure/   AppDbContext e mapeamentos EF Core
   Migrations/       histórico versionado do schema
   Model/            entidades e enums
-  Services/         SMTP, armazenamento de imagens e migração de senhas antigas
+  Services/         SMTP, armazenamento de imagens, migração de senhas e seed administrativo
   uploads/cartas/   arquivos de cartas armazenados localmente
   Program.cs        registro de serviços, autenticação, middleware e rotas
   appsettings.example.json
 ```
+
+`WebYugi.Tests/` contém a suíte automatizada de autorização administrativa e seed.
 
 Não há camada Repository dedicada; os controllers/serviços usam `AppDbContext` diretamente.
 
@@ -65,7 +67,7 @@ CREATE USER webyugi WITH PASSWORD 'defina-uma-senha-local';
 CREATE DATABASE cartas OWNER webyugi;
 ```
 
-Copie `WebYugi/appsettings.example.json` para `WebYugi/appsettings.json`. No novo arquivo, substitua `ConnectionStrings:DefaultConnection` com as credenciais locais. Alternativamente, defina `ConnectionStrings__DefaultConnection` no ambiente do processo backend. Não versione credenciais reais.
+Copie `WebYugi/appsettings.example.json` para `WebYugi/appsettings.json`. No novo arquivo, substitua `ConnectionStrings:DefaultConnection` com as credenciais locais. Alternativamente, defina `ConnectionStrings__DefaultConnection` no ambiente do processo backend. Não versione credenciais reais. O backend também aceita uma URL padrão PostgreSQL em `DATABASE_URL` (por exemplo, a URL `postgresql://...` copiada do Neon); ela tem prioridade sobre a connection string e o código converte essa URL para o formato Npgsql, exigindo TLS.
 
 O arquivo de exemplo usa o banco `cartas`, porta `5432` e placeholders de usuário/senha. Não há `.env.example`.
 
@@ -78,7 +80,11 @@ dotnet restore WebYugi/WebYugi.csproj
 dotnet ef database update --project WebYugi/WebYugi.csproj --startup-project WebYugi/WebYugi.csproj
 ```
 
-As migrations criam tabelas para usuários, cartas, decks, itens de deck, favoritos e tokens de redefinição. A aplicação **não aplica migrations automaticamente** e não tem seed de cartas. Um banco vazio pode ser inicializado com as migrations; cadastre cartas após iniciar a API.
+As migrations criam tabelas para usuários, cartas, decks, itens de deck, favoritos e tokens de redefinição. A aplicação **não aplica migrations automaticamente**. Um banco vazio pode ser inicializado com as migrations; cadastre cartas após iniciar a API. A migration `AddAdminRole` adiciona `IsAdmin` e `MustChangePassword` à tabela `users`, ambos com padrão `false`.
+
+Ao iniciar após aplicar migrations, o backend cria o administrador inicial se não houver conta com o e-mail configurado. Se esse e-mail já pertencer a uma conta comum, a inicialização falha com orientação para resolver a colisão manualmente. A senha é armazenada usando o mesmo `PasswordHasher` adotado no login; não é registrada em logs. A aplicação não executa migrations automaticamente.
+
+Configure opcionalmente `ADMIN_INITIAL_NAME`, `ADMIN_INITIAL_EMAIL` e `ADMIN_INITIAL_PASSWORD` no ambiente. Em desenvolvimento, os padrões são `admin`, `admin@gmail.com` e `admin`. O acesso administrativo depende somente da flag `IsAdmin` da conta no banco. Em produção, informe explicitamente uma senha forte com pelo menos 12 caracteres, letras maiúsculas e minúsculas, número e símbolo; a senha padrão é recusada.
 
 Antes de atualizar um banco já utilizado, faça backup. A migration de autenticação normaliza identificadores de contas antigas e falha se detectar nome ou e-mail duplicado após normalização; resolva os conflitos antes de repetir a operação. Ela também adiciona suporte a hashes e tokens de recuperação. Evite reverter somente o código após usuários terem migrado suas senhas: versões antigas não validam hashes.
 
@@ -104,9 +110,20 @@ Uma resposta `200` com `[]` indica que a API está acessível e o banco consult�
 
 | Chave | Necessária | Descrição |
 |---|---:|---|
-| `ConnectionStrings__DefaultConnection` | Sim, se não estiver em `appsettings*.json` | Connection string do PostgreSQL |
+| `DATABASE_URL` | Recomendada em Railway/Neon | URL PostgreSQL (`postgresql://usuario:senha@host/banco?sslmode=require`) |
+| `ConnectionStrings__DefaultConnection` | Sim, se `DATABASE_URL` não estiver definida | Connection string do PostgreSQL no formato Npgsql |
 
-Exemplo de formato (substitua as credenciais): `Host=localhost;Port=5432;Database=cartas;Username=webyugi;Password=...`.
+Exemplo local: `Host=localhost;Port=5432;Database=cartas;Username=webyugi;Password=...`. Para Neon, use a connection string fornecida pelo painel e mantenha TLS (`SSL Mode=Require`). Em produção, cadastre esses valores nas variáveis/segredos do serviço Railway, nunca no repositório.
+
+### Railway + Neon
+
+1. Crie um projeto e um banco no Neon. Copie a connection string PostgreSQL do painel; para deploy, prefira o endpoint pooled (host com `-pooler`) se disponível. Guarde a senha como segredo.
+2. No serviço do backend no Railway, adicione `DATABASE_URL` com a URL completa copiada do Neon. O código entende `postgres://` e `postgresql://` e sempre ativa TLS. Também é possível configurar `ConnectionStrings__DefaultConnection` no formato Npgsql.
+3. Inicialize o schema no banco Neon vazio executando [`docs/database/neon-schema.sql`](docs/database/neon-schema.sql) no SQL Editor do Neon. Esse script cria as tabelas e registra as migrations atuais; assim a API não tenta recriar tabelas ao aplicar migrations depois.
+4. Cadastre `ADMIN_INITIAL_PASSWORD` forte e `ADMIN_INITIAL_EMAIL`/`ADMIN_INITIAL_NAME` como variáveis Railway. Depois, implante a API. No primeiro start, o serviço cria o administrador inicial.
+5. Teste uma rota pública como `GET /cards`. `200` (mesmo com `[]`) confirma que API e banco estão se comunicando. Confira os logs Railway caso a conexão falhe.
+
+O Railway deve executar o backend e o Neon deve ser acessível pela internet; não use `localhost` na URL Neon. O banco e a API são serviços separados, então configure o segredo no serviço da API. Se o Neon suspender o compute por inatividade, a primeira conexão pode demorar alguns segundos. Para um banco Neon já existente com dados, não rode o SQL de banco vazio: faça backup e aplique/valide migrations em um ambiente de staging.
 
 ### E-mail de recuperação (opcional)
 
@@ -161,11 +178,23 @@ Prefixos abaixo são relativos à origem do backend (por exemplo `https://localh
 |---|---|---|---|
 | `GET /cards` | Público | Query opcionais: `search`, `type`, `attribute`, `monsterRace`, `minAttack`, `maxAttack`, `minDefense`, `maxDefense`, `minLevel`, `maxLevel`, `archetype`, `rarity`, `description` | `200` lista ordenada por nome |
 | `GET /cards/{id}` | Público | ID inteiro | `200` carta; `404` ausente |
-| `POST /cards` | Autenticado* | Multipart: `name`, `type`, `description`; opcionais `attribute`, `monsterRace`, `level`, `attack`, `defense`, `archetype`, `rarity`, `image` | `201`; arquivo de imagem até 5 MB; `400` validação/upload inválido |
-| `PUT /cards/{id}` | Autenticado* | Mesmo formulário multipart | `200` carta atualizada; `404` ausente |
-| `DELETE /cards/{id}` | Autenticado* | ID inteiro | `204`; `409` carta referenciada em deck |
+| `POST /cards` | Administrador | Multipart: `name`, `type`, `description`; opcionais `attribute`, `monsterRace`, `level`, `attack`, `defense`, `archetype`, `rarity`, `image` | `201`; arquivo de imagem até 5 MB; `400` validação/upload inválido |
+| `PUT /cards/{id}` | Administrador | Mesmo formulário multipart | `200` carta atualizada; `404` ausente |
+| `DELETE /cards/{id}` | Administrador | ID inteiro | `204`; `409` carta referenciada em deck |
 
-Validações: nome obrigatório até 200 caracteres; nível entre 0 e 13; arquétipo até 100 e raridade até 50. Imagem aceita JPG/JPEG, PNG, WEBP e GIF, limitada a 5 MB e verificada por decoder. `*` Qualquer conta autenticada pode alterar catálogo: não existe role administrativa.
+Validações: nome obrigatório até 200 caracteres; nível entre 0 e 13; arquétipo até 100 e raridade até 50. Imagem aceita JPG/JPEG, PNG, WEBP e GIF, limitada a 5 MB e verificada por decoder. A leitura permanece pública; toda alteração do catálogo exige administrador.
+
+### Administração — `/api/admin`
+
+Todas as rotas administrativas exigem sessão e confirmação de que o usuário continua marcado como administrador no banco. Assim, alterações ou revogações de `IsAdmin` têm efeito na próxima requisição, mesmo com cookie ainda válido. A flag `MustChangePassword` não restringe o acesso administrativo.
+
+| Método e rota | Finalidade |
+|---|---|
+| `GET /api/admin/users?search=termo` | Lista usuários sem senha/hash; busca por nome e e-mail |
+| `GET /api/admin/users/{id}` | Consulta os dados cadastrais permitidos |
+| `PUT /api/admin/users/{id}` | Atualiza nome e e-mail (`{ "name": "Nome", "email": "email@example.com" }`) |
+
+O gerenciamento do catálogo reutiliza `POST`, `PUT` e `DELETE /cards` existentes, protegidos pela mesma política administrativa. Usuários comuns nunca recebem uma operação de alteração de `IsAdmin`. O endpoint de exclusão de conta não permite que um administrador apague a própria conta.
 
 Exemplo:
 
@@ -216,12 +245,13 @@ O diagrama e a descrição das chaves estão em [Banco de dados](docs/database/R
 - **Imagem desaparece após redeploy:** o diretório de uploads não está persistido no disco de hospedagem.
 - **Sem conteúdo no catálogo:** não há seed ou importador de cartas neste repositório.
 - **Sem fluxo de duelos:** partidas online e motor de regras não estão implementados.
-- **Testes:** não há projeto de testes automatizados configurado.
+- **Administrador inicial não inicia:** aplique as migrations, confirme as variáveis `ADMIN_INITIAL_*` e verifique se o e-mail inicial já pertence a uma conta comum.
 
 ## Verificação
 
 ```bash
 dotnet build WebYugi/WebYugi.csproj
+dotnet test WebYugi.slnx
 ```
 
-Build valida a compilação. Para validar persistência e rotas, configure PostgreSQL, aplique migrations e inicie a API; migrations não foram executadas automaticamente na inicialização.
+Os testes cobrem criação idempotente e segura do administrador, colisão com conta comum, autorização baseada na flag `IsAdmin` e contratos que impedem elevação pública. Para validar persistência e rotas com PostgreSQL, aplique migrations e inicie a API; migrations não são executadas automaticamente.

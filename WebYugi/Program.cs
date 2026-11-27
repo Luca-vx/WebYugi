@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.RateLimiting;
@@ -16,10 +17,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var databaseConnectionString = DatabaseConnection.Resolve(builder.Configuration);
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection")
-    )
+    options.UseNpgsql(databaseConnectionString)
 );
 
 builder.Services.Configure<FormOptions>(options =>
@@ -37,6 +37,9 @@ builder.Services.AddSingleton<ICardCopyLimitPolicy, DefaultCardCopyLimitPolicy>(
 builder.Services.AddScoped<IPasswordHasher<Users>, PasswordHasher<Users>>();
 builder.Services.AddSingleton<IPasswordResetEmailSender, PasswordResetEmailSender>();
 builder.Services.AddHostedService<LegacyPasswordMigrationService>();
+builder.Services.AddHostedService<InitialAdminSeeder>();
+builder.Services.AddScoped<IAuthorizationHandler, AdminOnlyHandler>();
+builder.Services.AddAuthorization(options => options.AddPolicy("AdminOnly", policy => policy.RequireAuthenticatedUser().AddRequirements(new AdminOnlyRequirement())));
 builder.Services.Configure<PasswordHasherOptions>(options => options.IterationCount = 210_000);
 builder.Services.AddRateLimiter(options =>
 {

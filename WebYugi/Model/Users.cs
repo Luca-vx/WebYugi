@@ -26,6 +26,10 @@ namespace WebYugi.Model
 
         public int PasswordVersion { get; set; }
 
+        public bool IsAdmin { get; set; }
+
+        public bool MustChangePassword { get; set; }
+
         public DateTime DataCadastro { get; set; }
 
         public Users(string name, string email, string senha)
